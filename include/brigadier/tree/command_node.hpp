@@ -51,7 +51,7 @@ namespace brigadier {
 
 	protected:
 		template <typename... Args>
-		[[nodiscard]] static constexpr std::expected<void, std::string> available(Args&&... args) {
+		[[nodiscard]] static constexpr constraint_result available(Args&&... args) {
 			return Constraint::validate(std::forward<Args>(args)...);
 		}
 

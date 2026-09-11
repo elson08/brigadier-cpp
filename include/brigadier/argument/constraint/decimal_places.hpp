@@ -1,13 +1,12 @@
 #pragma once
 
 #include <algorithm>
+#include <brigadier/constraint.hpp>
 #include <cmath>
 #include <concepts>
 #include <cstddef>
-#include <expected>
 #include <format>
 #include <limits>
-#include <string>
 
 namespace brigadier {
 	template <std::floating_point T, std::size_t Places>
@@ -20,7 +19,7 @@ namespace brigadier {
 			return scale;
 		}();
 
-		[[nodiscard]] static constexpr std::expected<void, std::string> validate(const T value) {
+		[[nodiscard]] static constexpr constraint_result validate(const T value) {
 			const auto scaled = value * scale_;
 			const auto tolerance = std::numeric_limits<T>::epsilon() * std::max(T{ 1 }, std::abs(scaled)) * T{ 4 };
 			if (!std::isfinite(value) || !std::isfinite(scaled) || std::abs(scaled - std::round(scaled)) > tolerance) {

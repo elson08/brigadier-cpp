@@ -34,8 +34,8 @@ namespace brigadier {
 		}
 
 	private:
-		static constexpr std::expected<void, std::string> validate_constraints(const value_type& value) {
-			std::expected<void, std::string> result;
+		static constexpr constraint_result validate_constraints(const value_type& value) {
+			constraint_result result;
 			static_cast<void>(((result = Constraints::validate(value), !result) || ...));
 			return result;
 		}

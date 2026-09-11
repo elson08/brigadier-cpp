@@ -1,12 +1,11 @@
 #pragma once
 
-#include <expected>
-#include <string>
+#include <brigadier/constraint.hpp>
 
 namespace brigadier {
 	template <typename T>
 	struct positive {
-		[[nodiscard]] static constexpr std::expected<void, std::string> validate(const T& value) {
+		[[nodiscard]] static constexpr constraint_result validate(const T& value) {
 			if (value > T{}) {
 				return {};
 			}
