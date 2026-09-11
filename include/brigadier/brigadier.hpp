@@ -1,0 +1,24 @@
+#pragma once
+
+#include <brigadier/argument/argument.hpp>
+#include <brigadier/argument/constraint/bounds.hpp>
+#include <brigadier/argument/constraint/decimal_places.hpp>
+#include <brigadier/argument/constraint/positive.hpp>
+#include <brigadier/argument/parse/bool_parser.hpp>
+#include <brigadier/argument/parse/float_parser.hpp>
+#include <brigadier/argument/parse/greedy_text_parser.hpp>
+#include <brigadier/argument/parse/integral_parser.hpp>
+#include <brigadier/argument/parse/parser.hpp>
+#include <brigadier/argument/parse/word_parser.hpp>
+#include <brigadier/argument/suggestion_provider.hpp>
+#include <brigadier/argument/suggestions_builder.hpp>
+#include <brigadier/command.hpp>
+#include <brigadier/command_dispatcher.hpp>
+#include <brigadier/constraint.hpp>
+#include <brigadier/execution_result.hpp>
+#include <brigadier/fixed_string.hpp>
+#include <brigadier/string_reader.hpp>
+#include <brigadier/tree/advance_result.hpp>
+#include <brigadier/tree/argument_node.hpp>
+#include <brigadier/tree/command_node.hpp>
+#include <brigadier/tree/literal_node.hpp>
