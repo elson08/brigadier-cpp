@@ -25,20 +25,25 @@ namespace brigadier {
 			auto& reader = builder.reader();
 			reader.skip_whitespace();
 
-			if (reader.remaining().size() > reader.peek_word().size()) {
-				if (auto parsed = argument_type::parse(reader); parsed && base_type::available(source, args..., *parsed)) {
-					static_cast<void>((Children::suggest(source, builder, args..., *parsed) || ...));
-				}
-
-				return true;
-			}
-
 			auto candidate_reader = reader;
-			if (auto parsed = argument_type::parse(candidate_reader); parsed && !base_type::available(source, args..., *parsed)) {
-				return true;
+			auto parsed = argument_type::parse(candidate_reader);
+			if (parsed && !base_type::available(source, args..., *parsed)) {
+				return false;
 			}
 
-			suggestion_provider<underlying_type>::suggest(source, builder, args...);
+			const auto single_word = reader.remaining().size() <= reader.peek_word().size();
+			const auto extends_to_end = !parsed || !candidate_reader.can_read();
+			if (single_word || (multi_word_suggestions<underlying_type> && extends_to_end)) {
+				suggestion_provider<underlying_type>::suggest(source, builder, args...);
+				return false;
+			}
+
+			if (!parsed) {
+				return false;
+			}
+
+			reader = candidate_reader;
+			static_cast<void>((Children::suggest(source, builder, args..., *parsed) || ...));
 			return true;
 		}
 
